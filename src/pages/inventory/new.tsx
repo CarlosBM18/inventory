@@ -6,7 +6,7 @@ const NewItem = () => {
   const inputNameRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  const { mutate, isLoading } = trpc.useMutation("item.create", {
+  const { mutate, isLoading } = trpc.useMutation("items.create", {
     onSuccess: () => {
       router.replace("/inventory")
     }
