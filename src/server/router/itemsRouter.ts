@@ -1,5 +1,6 @@
 import { createRouter } from './context'
 import { z } from 'zod'
+import QRCode from 'qrcode'
 
 export const itemsRouter = createRouter()
   .query('get-all', {
@@ -16,6 +17,19 @@ export const itemsRouter = createRouter()
         data: {
           name: input.name,
         },
+      })
+    },
+  })
+  .mutation('download-qr-code', {
+    input: z.object({
+      id: z.string(),
+      name: z.string().min(2),
+    }),
+    async resolve({ input }): Promise<string> {
+      return await new Promise((res) => {
+        QRCode.toDataURL(input.id, function (err, url) {
+          res(url)
+        })
       })
     },
   })
