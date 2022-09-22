@@ -13,8 +13,6 @@ const NewItem = () => {
   })
 
   async function onSubmit() {
-    console.log('in')
-    console.log(inputNameRef.current?.value as string)
     mutate({ name: inputNameRef.current?.value || "" })
   }
 
