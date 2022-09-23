@@ -7,8 +7,8 @@ const Inventory: React.FC = () => {
   const { data } = trpc.useQuery(['items.get-all'])
 
   return (
-    <div className="flex flex-col p-2">
-      <div>Inventory</div>
+    <div className="flex w-screen flex-col items-center p-4">
+      <div className="text-2xl font-bold">Inventory</div>
       {data?.map((item) =>
         <Item key={item.id} {...item} />) ?? <div>Loading</div>}
       <div className="flex flex-center">
@@ -34,17 +34,21 @@ const Item = (props: Item) => {
   const [downloadName, setDownloadName] = useState('')
 
   return (
-    <div className="flex flex-row">
-      {props.name}
-      {!downloadName ? <button onClick={() => {
+    <div className="flex flex-row p-4 bg-slate-100 m-2 items-center w-52 justify-between">
+      <p className="mr-3">
+        {props.name}
+      </p>
+      {!downloadName ? <button className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" onClick={() => {
         mutate(props)
       }}>
-        Generate
-        {isLoading && <div>Loading</div>}
+        {!isLoading ? <div>Generate</div> : <div>Generating</div>}
       </button> :
-        <a href={href} download={downloadName}>
-          <DownloadIcon />
-        </a>}
+        <div className=" border-blue-600 text-blue-600 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" >
+          <a href={href} download={downloadName}>
+            <DownloadIcon />
+          </a>
+        </div>
+      }
     </div>
   )
 }
