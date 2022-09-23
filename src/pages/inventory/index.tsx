@@ -1,8 +1,7 @@
 import { Item } from "@prisma/client"
 import Link from "next/link"
-import { HTMLAttributeAnchorTarget, useRef, useState } from "react"
+import { useState } from "react"
 import { trpc } from "../../utils/trpc"
-// import QRCode from 'qrcode'
 
 const Inventory: React.FC = () => {
   const { data } = trpc.useQuery(['items.get-all'])
