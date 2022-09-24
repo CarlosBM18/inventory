@@ -1,10 +1,13 @@
 import { Item } from "@prisma/client"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import { trpc } from "../../utils/trpc"
 
 const Inventory: React.FC = () => {
-  const { data } = trpc.useQuery(['items.get-all'])
+  const { data, isLoading } = trpc.useQuery(['items.get-all'])
+
+  if (isLoading || !data) return null
 
   return (
     <div className="flex w-screen flex-col items-center p-4">
@@ -22,13 +25,41 @@ const Inventory: React.FC = () => {
           </a>
         </Link>
       </div>
-      {data?.map((item) =>
-        <Item key={item.id} {...item} />) ?? <div>Loading</div>}
+      {/* {data?.map((item) =>
+        <Item key={item.id} {...item} />) ?? <div>Loading</div>} */}
+      <div className="flex flex-col">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="overflow-hidden">
+              <table className="min-w-full">
+                <thead className="border-b">
+                  <tr>
+                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      ID
+                    </th>
+                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      Name
+                    </th>
+                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.map((item) =>
+                    <Item key={item.id} {...item} />) ?? <div>Loading</div>}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
 const Item = (props: Item) => {
+  const router = useRouter()
   const { mutate, isLoading } = trpc.useMutation('items.download-qr-code', {
     onSuccess: (data) => {
       console.log('data?', data)
@@ -40,24 +71,32 @@ const Item = (props: Item) => {
   const [downloadName, setDownloadName] = useState('')
 
   return (
-    <Link href={`/inventory/item/${props.id}`}>
-      <button className="flex flex-row p-4 bg-slate-100 m-2 items-center max-w-52 justify-between">
-        <p className="mr-3">
-          {props.name}
-        </p>
-        {!downloadName ? <button className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" onClick={() => {
-          mutate(props)
-        }}>
-          {!isLoading ? <div>Generate</div> : <div>Generating</div>}
-        </button> :
+    <tr className="border-b hover:bg-slate-100 cursor-pointer" onClick={() => { router.push(`/inventory/item/${props.id}`) }}>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{props.id}</td>
+      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap max-w-xs overflow-hidden overflow-ellipsis">
+        {props.name}
+      </td>
+      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+        {!downloadName ?
+          <button className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              mutate(props)
+            }}
+          >
+            {!isLoading ? <div>Generate code</div> : <div>Generating</div>}
+          </button> :
           <div className=" border-blue-600 text-blue-600 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" >
-            <a href={href} download={downloadName}>
+            <a href={href} download={downloadName} onClick={(e) => {
+              e.stopPropagation()
+            }}>
               <DownloadIcon />
             </a>
           </div>
         }
-      </button>
-    </Link>
+      </td>
+    </tr>
 
   )
 }

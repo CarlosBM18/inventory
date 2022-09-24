@@ -17,28 +17,27 @@ const ItemPageContent: React.FC<{ id: string }> = ({ id }) => {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div>
-        {data.id}
+    <div className="h-screen flex justify-center items-center">
+      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+        <h5 className="text-gray-900 text-xl leading-tight font-medium mb-2">{data.name}</h5>
+        <p className="text-gray-700 text-base mb-4">
+          ID: {data.id}
+        </p>
+        <button type="button" disabled={isLoading} onClick={() => {
+          if (!isLoading) {
+            mutate({ id: data.id })
+          }
+        }}
+          className="inline-block px-6 py-2 mr-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+        >
+          {isLoading ? 'Deleting' : 'Delete'}
+        </button>
+        <Link href='/inventory'>
+          <a type="button" className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+            Go back
+          </a>
+        </Link>
       </div>
-      <div className="h-2" />
-      <div>
-        {data.name}
-      </div>
-      <div className="h-2" />
-      <button type="button" disabled={isLoading} onClick={() => {
-        if (!isLoading) {
-          mutate({ id: data.id })
-        }
-      }} className="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-        {isLoading ? 'Deleting' : 'Delete'}
-      </button>
-      <div className="h-2" />
-      <Link href='/inventory'>
-        <a type="button" className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-          Go back
-        </a>
-      </Link>
     </div>
   )
 }
