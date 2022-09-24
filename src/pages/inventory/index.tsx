@@ -7,7 +7,7 @@ import { trpc } from "../../utils/trpc"
 const Inventory: React.FC = () => {
   const { data, isLoading } = trpc.useQuery(['items.get-all'])
 
-  if (isLoading || !data) return null
+  if (isLoading || !data) return <div>Loading...</div>
 
   return (
 

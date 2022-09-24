@@ -5,12 +5,16 @@ import { trpc } from "../../../utils/trpc"
 
 const ItemPageContent: React.FC<{ id: string }> = ({ id }) => {
   const router = useRouter()
-  const { data } = trpc.useQuery(['items.get-by-id', { id }])
+  const { data, isLoading: loadingData } = trpc.useQuery(['items.get-by-id', { id }])
   const { mutate, isLoading } = trpc.useMutation('items.delete', {
     onSuccess: () => {
       router.replace('/inventory')
     }
   })
+
+  if (loadingData) {
+    return <div>Loading...</div>
+  }
 
   if (!data || !data?.name) {
     return <div>Item not found</div>
