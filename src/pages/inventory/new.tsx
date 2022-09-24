@@ -13,13 +13,15 @@ const NewItem = () => {
   })
 
   async function onSubmit() {
-    mutate({ name: inputNameRef.current?.value || "" })
+    if (inputNameRef.current?.value) {
+      mutate({ name: inputNameRef.current.value })
+    }
   }
 
   return (
     <div className="p-4">
       <div className="text-2xl font-bold">
-        NewItem
+        New item
       </div>
       <div className="my-2 xl:w-96">
         <input

@@ -10,15 +10,15 @@ const Inventory: React.FC = () => {
     <div className="flex w-screen flex-col items-center p-4">
       <div className="text-2xl font-bold">Inventory</div>
       <div className="flex flex-center py-4">
-        <Link href='/inventory/new'>
-          <a type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-            Add new item
+        <Link href='/'>
+          <a type="button" className="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+            Go back
           </a>
         </Link>
         <div className="w-2" />
-        <Link href='/'>
+        <Link href='/inventory/new'>
           <a type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-            Go back
+            Add new item
           </a>
         </Link>
       </div>
@@ -40,8 +40,8 @@ const Item = (props: Item) => {
   const [downloadName, setDownloadName] = useState('')
 
   return (
-    <Link href={`/inventory/${props.id}`}>
-      <div className="flex flex-row p-4 bg-slate-100 m-2 items-center max-w-52 justify-between">
+    <Link href={`/inventory/item/${props.id}`}>
+      <button className="flex flex-row p-4 bg-slate-100 m-2 items-center max-w-52 justify-between">
         <p className="mr-3">
           {props.name}
         </p>
@@ -56,7 +56,7 @@ const Item = (props: Item) => {
             </a>
           </div>
         }
-      </div>
+      </button>
     </Link>
 
   )
