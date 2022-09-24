@@ -2,10 +2,13 @@ import Head from "next/head"
 import { Html5QrcodeScanner } from "html5-qrcode"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { Item } from "@prisma/client"
 
 let scanner: Html5QrcodeScanner
 
 const Scanner: React.FC = () => {
+  const router = useRouter()
   const [html5QrcodeScanner, setHtml5QrcodeScanner] = useState<Html5QrcodeScanner>()
   const [paused, setPaused] = useState(false)
 
@@ -15,6 +18,8 @@ const Scanner: React.FC = () => {
       html5QrcodeScanner.pause()
       setPaused(true)
     }
+    const data = JSON.parse(decodedText) as Item
+    router.push(`/inventory/item/${data.id}`)
   }
 
   function onScanFailure(error: string) {
