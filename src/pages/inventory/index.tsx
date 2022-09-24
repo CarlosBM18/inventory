@@ -30,7 +30,7 @@ const Inventory: React.FC = () => {
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="overflow-hidden">
+            <div className="overflow-x-auto">
               <table className="min-w-full">
                 <thead className="border-b">
                   <tr>
@@ -54,6 +54,31 @@ const Inventory: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8">
+        <div className="py-2 inline-block sm:px-6 lg:px-8">
+          <div className="overflow-scroll">
+            <table>
+              <thead className="border-b">
+                <tr>
+                  <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                    ID
+                  </th>
+                  <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                    Name
+                  </th>
+                  <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.map((item) =>
+                  <Item key={item.id} {...item} />) ?? <div>Loading</div>}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> */}
     </div>
   )
 }
