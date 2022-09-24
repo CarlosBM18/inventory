@@ -27,9 +27,12 @@ export const itemsRouter = createRouter()
     }),
     async resolve({ input }): Promise<string> {
       return await new Promise((res) => {
-        QRCode.toDataURL(input.id, function (err, url) {
-          res(url)
-        })
+        QRCode.toDataURL(
+          JSON.stringify({ id: input.id, name: input.name }),
+          function (err, url) {
+            res(url)
+          }
+        )
       })
     },
   })
