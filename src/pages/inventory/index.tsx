@@ -9,15 +9,21 @@ const Inventory: React.FC = () => {
   return (
     <div className="flex w-screen flex-col items-center p-4">
       <div className="text-2xl font-bold">Inventory</div>
-      {data?.map((item) =>
-        <Item key={item.id} {...item} />) ?? <div>Loading</div>}
-      <div className="flex flex-center">
+      <div className="flex flex-center py-4">
         <Link href='/inventory/new'>
           <a type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
             Add new item
           </a>
         </Link>
+        <div className="w-2" />
+        <Link href='/'>
+          <a type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+            Go back
+          </a>
+        </Link>
       </div>
+      {data?.map((item) =>
+        <Item key={item.id} {...item} />) ?? <div>Loading</div>}
     </div>
   )
 }

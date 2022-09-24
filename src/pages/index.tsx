@@ -12,11 +12,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        <Link href={'/inventory'}>
-          <a>Go to Inventory</a>
+        <Link href='/inventory'>
+          <a className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Go to Inventory</a>
         </Link>
-        <Link href={'/scanner'}>
-          <a>Go to Scanner</a>
+        <div className="h-2" />
+        <Link href='/scanner'>
+          <a className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Go to Scanner</a>
         </Link>
       </main>
     </>
