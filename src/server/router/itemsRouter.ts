@@ -8,6 +8,18 @@ export const itemsRouter = createRouter()
       return await ctx.prisma.item.findMany()
     },
   })
+  .query('get-by-id', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.item.findFirst({
+        where: {
+          id: input.id,
+        },
+      })
+    },
+  })
   .mutation('create', {
     input: z.object({
       name: z.string().min(2),
@@ -16,6 +28,18 @@ export const itemsRouter = createRouter()
       return await ctx.prisma.item.create({
         data: {
           name: input.name,
+        },
+      })
+    },
+  })
+  .mutation('delete', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.item.delete({
+        where: {
+          id: input.id,
         },
       })
     },
