@@ -11,7 +11,7 @@ const Inventory: React.FC = () => {
 
   return (
 
-    <div className="flex flex-col">
+    <div className="flex flex-col max-w-5xl items-center m-auto">
       <div className="flex flex-col items-center">
         <div className="text-2xl font-bold">Inventory</div>
         <div className="flex flex-center py-4">
@@ -36,10 +36,10 @@ const Inventory: React.FC = () => {
               <thead className="border-b">
                 <tr>
                   <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                    ID
+                    Name
                   </th>
                   <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                    Name
+                    ID
                   </th>
                   <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                     Action
@@ -72,9 +72,11 @@ const Item = (props: Item) => {
 
   return (
     <tr className="border-b hover:bg-slate-100 cursor-pointer" onClick={() => { router.push(`/inventory/item/${props.id}`) }}>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{props.id}</td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
         {props.name}
+      </td>
+      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+        {props.id}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         {!downloadName ?
