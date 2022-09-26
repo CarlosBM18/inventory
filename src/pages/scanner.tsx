@@ -1,11 +1,14 @@
 import Head from "next/head"
 import { Html5QrcodeScanner } from "html5-qrcode"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Item } from "@prisma/client"
 
 let scanner: Html5QrcodeScanner
+
+// Stric mode rendering twice fix...
+let cleaning = false
 
 const Scanner: React.FC = () => {
   const router = useRouter()
@@ -27,11 +30,24 @@ const Scanner: React.FC = () => {
     console.warn(`Code scan error = ${error}`)
   }
 
-  useEffect(() => {
+  const createScanner = () => {
     scanner = new Html5QrcodeScanner("reader-qrcode", { fps: 10, qrbox: { width: 250, height: 250 }, supportedScanTypes: [] }, false)
     scanner.render(onScanSuccess, onScanFailure)
     setHtml5QrcodeScanner(scanner)
+  }
+
+  useEffect(() => {
+    // Stric mode rendering twice fix...
+    if (cleaning) {
+      setTimeout(() => {
+        createScanner()
+        cleaning = false
+      }, 200)
+    } else {
+      createScanner()
+    }
     return () => {
+      cleaning = true
       scanner.clear()
     }
   }, [])
